@@ -1,0 +1,47 @@
+﻿body {
+  font-family: Arial;
+  background-color: #b3e5fc;
+  margin: 0;
+}
+
+header, footer {
+  background-color: #0288d1;
+  color: white;
+  text-align: center;
+  padding: 10px;
+}
+
+nav {
+  background-color: #81d4fa;
+  padding: 10px;
+}
+
+nav a {
+  color: #01579b;
+  margin-right: 15px;
+}
+
+main {
+  display: flex;
+  gap: 20px;
+  margin: 20px;
+}
+
+section, aside {
+  background-color: #e1f5fe;
+  padding: 15px;
+}
+
+section {
+  flex: 2;
+}
+
+aside {
+  flex: 1;
+}
+
+button {
+  background-color: #0288d1;
+  color: white;
+  padding: 5px 10px;
+}

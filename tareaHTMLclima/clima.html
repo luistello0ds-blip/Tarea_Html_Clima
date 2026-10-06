@@ -1,0 +1,79 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Clima</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <h1>Consulta del clima</h1>
+  </header>
+
+  <nav>
+    <a href="#consulta">Consulta</a>
+  </nav>
+
+  <main>
+    <section id="consulta">
+      <h2>Buscar una ciudad</h2>
+
+      <form id="formulario">
+        <label for="ciudad">Ciudad:</label>
+        <input id="ciudad" type="text" required>
+        <button type="submit">Buscar</button>
+      </form>
+
+      <div id="resultado"></div>
+    </section>
+
+    <aside>
+      <p>Escribe una ciudad y presiona Buscar para ver el clima.</p>
+    </aside>
+  </main>
+
+  <footer>
+    <p>Trabajo de programación</p>
+  </footer>
+
+  <script>
+    const formulario = document.getElementById("formulario");
+
+    formulario.addEventListener("submit", async function(evento) {
+      evento.preventDefault();
+
+      const ciudad = document.getElementById("ciudad").value;
+      const resultado = document.getElementById("resultado");
+
+      resultado.innerHTML = "Cargando...";
+
+      const respuestaCiudad = await fetch(
+        "https://geocoding-api.open-meteo.com/v1/search?name=" + ciudad + "&count=1&language=es&format=json"
+      );
+      const datosCiudad = await respuestaCiudad.json();
+
+      if (!datosCiudad.results) {
+        resultado.innerHTML = "No se encontró la ciudad.";
+        return;
+      }
+
+      const lugar = datosCiudad.results[0];
+
+      const respuestaClima = await fetch(
+        "https://api.open-meteo.com/v1/forecast?latitude=" + lugar.latitude +
+        "&longitude=" + lugar.longitude +
+        "&current=temperature_2m&timezone=auto"
+      );
+      const datosClima = await respuestaClima.json();
+
+      resultado.innerHTML =
+        "<h3>Clima en " + lugar.name + "</h3>" +
+        "<p>Temperatura: " + datosClima.current.temperature_2m + " °C</p>";
+    });
+  </script>
+</body>
+</html>
+
+
+
+
